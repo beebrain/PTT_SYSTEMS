@@ -84,6 +84,15 @@
                                                                 </tr>
                                                                 <tr >
                                                                     <td class="field-label col-lg-2  col-xs-2 active">
+                                                                        <label>Problem Solution:</label>
+                                                                    </td>
+                                                                    <td colspan="3">
+                                                                        <?= $visit->pro_sol ?>
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr >
+                                                                    <td class="field-label col-lg-2  col-xs-2 active">
                                                                         <label>Service:</label>
                                                                     </td>
                                                                     <td colspan="3">
@@ -139,32 +148,32 @@
                                                     <script type="text/javascript" src="<?php echo base_url('asserts') ?>/js/slick.js"></script>
                                                     <script>
 
-                                                    $('#slide_stick').slick({
+                                                $('#slide_stick').slick({
                                                     //autoplay: true,
                                                     //autoplaySpeed: 5000,
                                                     arrows: false,
                                                     dots: true,
-                                                //speed: 800,
-                                                fade: true
-                                                    });
+                                                    //speed: 800,
+                                                    fade: true
+                                                });
 
-                                                    function deleteCon(id) {
-                                                        /* get data onclick */
+                                                function deleteCon(id) {
+                                                    /* get data onclick */
 
-                                                        $.confirm({
+                                                    $.confirm({
                                                         title: 'Delete!',
                                                         content: 'ต้องการลบ หรือไม่ ',
                                                         confirmButton: "Yes",
                                                         cancelButton: "Cancel",
                                                         confirmButtonClass: "btn-danger",
                                                         cancelButtonClass: "btn-warning",
-                                                            confirm: function () {
+                                                        confirm: function () {
                                                             //   aler("x");
                                                             console.log("<?php echo base_url('index.php/CompanyManage/deleteVis/') . "/" ?>" + id);
-                                                                        window.location.href = "<?php echo base_url('index.php/CompanyManage/deleteVis/') . "/" ?>" + id;
-                                                                                    },
-                                                                                cancel: function () {
-                                                                            }
+                                                            window.location.href = "<?php echo base_url('index.php/CompanyManage/deleteVis/') . "/" ?>" + id;
+                                                        },
+                                                        cancel: function () {
+                                                        }
                                                     });
 
                                                 }

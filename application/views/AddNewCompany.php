@@ -1,7 +1,8 @@
-
+<link href="<?php echo base_url('asserts') ?>/css/jquery.tagit.css" rel="stylesheet" type="text/css">
 <div class="app-container">
     <div class="row content-container">
         <?php $this->load->view("newTemp/navhead.php") ?>
+
 
         <?php $this->load->view("newTemp/navside.php") ?>
 
@@ -89,12 +90,29 @@
                                                         </div>
                                                         <div class="col-lg-6 ">
                                                             <div class="form-group">
-                                                                <label>Custormer Contact</label>
+                                                                <label>Customers Contact</label>
                                                                 <input class="form-control" name="c_contact" id="c_contact">
                                                             </div>
                                                         </div>
+                                                    </div>
 
-
+                                                    <div class="row no-margin-bottom">
+                                                        <div class="col-lg-6 ">
+                                                            <div class="form-group">
+                                                                <label>MAP</label>
+                                                                <input class="form-control" name="Map" id="Map" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 ">
+                                                            <div class="form-group">
+                                                                <label>Type</label>
+                                                                <div class="checkbox">
+                                                                    <label class="checkbox-inline"><input type="checkbox" value="A"  name="type[]" >Automotive (A)</label>
+                                                                    <label class="checkbox-inline"><input type="checkbox" value="I"  name="type[]">Industrial (I)</label>
+                                                                    <label class="checkbox-inline"><input type="checkbox" value="S"  name="type[]">Specialty (S)</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
 
 
@@ -147,7 +165,8 @@
         <?php $this->load->view("newTemp/script"); ?>
         <?php $this->load->view("newTemp/footer"); ?>
         <script src="<?php echo base_url('asserts') ?>/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
-
+        <script src="<?php echo base_url('asserts') ?>/js/tag-it.js" ></script>
+        <script src="<?php echo base_url('asserts/js/bootstrap-datepicker.js') ?>"></script>
         <script>
 
                                                     jQuery.validator.setDefaults({
@@ -172,6 +191,13 @@
                                                             }
                                                         }
                                                     });
+
+                                                    $(document).ready(function () {
+                                                        $("#c_contact").tagit({
+                                                            allowSpaces: true
+                                                        });
+                                                    });
+
 
                                                     var form = $("#newCom");
                                                     form.validate();

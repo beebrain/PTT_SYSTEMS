@@ -61,8 +61,8 @@ class CompanyManage extends CI_Controller {
     public function addNewCompany() {
         $this->load->model('Company_m');
         $data = $this->input->post();
+        $data["type"] = implode(",", $data["type"]);
         $this->Company_m->addCompany($data);
-
         redirect("index.php/CompanyManage/Visitor");
     }
 
@@ -105,6 +105,7 @@ class CompanyManage extends CI_Controller {
     public function updateCompany() {
         $this->load->model('Company_m');
         $data = $this->input->post();
+        $data["type"] = implode(",", $data["type"]);
         $this->Company_m->updateCompany($data);
 
         redirect("index.php/CompanyManage/Visitor");
@@ -159,7 +160,7 @@ class CompanyManage extends CI_Controller {
          */
 
 
-      //  $this->load->view("newTemp/head");
+        //  $this->load->view("newTemp/head");
         $this->load->view('DetailVisit.php', $data);
     }
 
@@ -195,17 +196,20 @@ class CompanyManage extends CI_Controller {
         $result_company1 = $this->Company_m->getCompanyCurrentDate($cdate);
         // echo $this->db->last_query();
         //  echo "---------------------------- <br>";
-        $companyList = null;
+        
 
         // ListCompany in NetDate
+        $companyNext = null;
         foreach ($result_company1 as $key => $value) {
             $companyNext[$key] = "'" . $value->company_id . "'";
         }
 
         // Get Company With Tentative and last App Date notin Company nextDate
         $result_comTan = $this->Company_m->getCompanyVisitNotin($cdate, $companyNext);
-        // echo $this->db->last_query();
-        //   echo "---------------------------- <br>";
+         //echo $this->db->last_query();
+         //  echo "---------------------------- <br>";
+        
+        
         $companyexit = $companyNext;
         $nextindex = sizeof($companyNext);
 
@@ -221,7 +225,7 @@ class CompanyManage extends CI_Controller {
         $this->load->model('Visit_m');
         foreach ($result_company1 as $key => $value) {
             $result_recom = $this->Visit_m->getVisitRec_Pro($value->company_id);
-        
+
             $result_company1[$key]->rec_pro = "";
             foreach ($result_recom as $key1 => $value1) {
                 //echo  strip_tags($value1->rec_pro);
@@ -231,7 +235,7 @@ class CompanyManage extends CI_Controller {
 
         foreach ($result_comTan as $key => $value) {
             $result_recom = $this->Visit_m->getVisitRec_Pro($value->company_id);
-        
+
             $result_comTan[$key]->rec_pro = "";
             foreach ($result_recom as $key1 => $value1) {
                 //echo  strip_tags($value1->rec_pro);
@@ -241,7 +245,7 @@ class CompanyManage extends CI_Controller {
 
         foreach ($result_comEx as $key => $value) {
             $result_recom = $this->Visit_m->getVisitRec_Pro($value->company_id);
-        
+
             $result_comEx[$key]->rec_pro = "";
             foreach ($result_recom as $key1 => $value1) {
                 //echo  strip_tags($value1->rec_pro);
@@ -467,18 +471,18 @@ class CompanyManage extends CI_Controller {
         $result_company = $this->Company_m->findDateBetweenVis($startDate_S, $endDate_S);
         // echo $this->db->last_query();
 
-         $this->load->model('Visit_m');
+        $this->load->model('Visit_m');
         foreach ($result_company as $key => $value) {
             $result_recom = $this->Visit_m->getVisitRec_Pro($value->company_id);
-        
+
             $result_company[$key]->rec_pro = "";
             foreach ($result_recom as $key1 => $value1) {
                 //echo  strip_tags($value1->rec_pro);
                 $result_company[$key]->rec_pro .= "<p>" . strip_tags($value1->rec_pro) . "</p>";
             }
         }
-        
-        
+
+
         $result["allCompany"] = $result_company;
         $result['searchDate'] = array("startDate" => $startDate, "endDate" => $endDate);
         //print_r($result["allCompany"]);

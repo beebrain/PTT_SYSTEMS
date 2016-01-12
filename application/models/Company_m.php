@@ -56,8 +56,8 @@ class Company_m extends CI_Model {
     }
 
     public function getCompanyCurrentDate($date) {
-        $sqlcom = " Select company.*,dealer.name as Dname,areamanager.name as Aname, a.app_date as v_app,a.tentative from( ";
-        $sqlcom .= " Select b.company_id,b.app_date,b.tentative from ( ";
+        $sqlcom = " Select company.*,dealer.name as Dname,areamanager.name as Aname, a.app_date as v_app,a.tentative,a.objective from( ";
+        $sqlcom .= " Select b.company_id,b.app_date,b.tentative,b.objective from ( ";
         $sqlcom .= " Select * from visit ";
         $sqlcom .= " where (visit.app_date >= '$date') and flag ='0' ";
         $sqlcom .= " order by visit.app_date ";
@@ -76,16 +76,17 @@ class Company_m extends CI_Model {
     }
 
     public function getCompanyVisitNotin($date, $data) {
-        $notcompany = implode(",", $data);
-
-        $sqlcom = " Select company.*,dealer.name as Dname,areamanager.name as Aname, a.app_date as v_app, a.tentative from( ";
-        $sqlcom .= " Select b.company_id,b.app_date,b.tentative from ( ";
+        if ($data <> null) {
+            $notcompany = implode(",", $data);
+        }
+        $sqlcom = " Select company.*,dealer.name as Dname,areamanager.name as Aname, a.app_date as v_app, a.tentative,a.objective from( ";
+        $sqlcom .= " Select b.company_id,b.app_date,b.tentative,b.objective from ( ";
         $sqlcom .= " Select * from visit ";
         $sqlcom .= " where (visit.app_date < '$date') and flag ='0'";
-        if (sizeof($notcompany) > 0) {
+        if (isset($notcompany) && sizeof($notcompany) > 0) {
             $sqlcom .= " and company_id not in ($notcompany) ";
         }
-        $sqlcom .= " order by visit.tentative desc, visit.app_date desc ";
+        $sqlcom .= " order by visit.tentative desc, visit.vis_date desc ";
         $sqlcom .= " ) as b ";
         $sqlcom .= " group by b.company_id ";
         $sqlcom .= " ) as a ";
@@ -95,7 +96,7 @@ class Company_m extends CI_Model {
 
         $sqlcom .= " WHERE company.flag = '0' ";
         $sqlcom .= " ORDER BY tentative desc ,a.`app_date` desc , a.`company_id` DESC ";
-       // echo $sqlcom;
+        // echo $sqlcom;
         $query = $this->db->query($sqlcom);
         return $query->result();
     }
@@ -107,7 +108,7 @@ class Company_m extends CI_Model {
         $sqlcom .= " inner join dealer on dealer.id = company.dealer ";
         $sqlcom .= " inner join areamanager on areamanager.id = company.area_manager ";
         $sqlcom .=" where company.flag = '0' ";
-          if (sizeof($notcompany) > 0) {
+        if (sizeof($notcompany) > 0) {
             $sqlcom .= " and company_id not in ($notcompany) ";
         }
         $sqlcom .=" ORDER BY company.company_id DESC";
@@ -142,11 +143,11 @@ class Company_m extends CI_Model {
         $query = $this->db->query($sqlcom);
         return $query->result();
     }
-    
-     public function findDateBetweenVis($start, $end) {
 
-        $sqlcom = " Select company.*,dealer.name as Dname,areamanager.name as Aname, a.app_date as v_app,a.tentative from( ";
-        $sqlcom .= " Select b.company_id,b.vis_date,b.app_date,b.tentative from ( ";
+    public function findDateBetweenVis($start, $end) {
+
+        $sqlcom = " Select company.*,dealer.name as Dname,areamanager.name as Aname, a.app_date as v_app,a.tentative,a.objective from( ";
+        $sqlcom .= " Select b.company_id,b.vis_date,b.app_date,b.tentative,b.objective from ( ";
         $sqlcom .= " Select * from visit ";
         $sqlcom .= " where (visit.vis_date BETWEEN '$start' AND '$end') and flag ='0' ";
         $sqlcom .= " order by visit.vis_date Desc";

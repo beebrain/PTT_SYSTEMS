@@ -554,8 +554,9 @@ a:hover {
     border-top-left-radius: 3px; }
 
 .checkbox, .radio {
-    margin-top: 15px;
-    margin-bottom: 15px; }
+    margin-top: 5px;
+    margin-bottom: 10px;
+    }
 
 .checkbox-inline {
     margin-bottom: 5px; }
@@ -564,7 +565,8 @@ a:hover {
     margin-right: 6px; }
 
 .checkbox label, .radio label, .checkbox-inline, .radio-inline {
-    padding-left: 0px; }
+    /* padding-left: 50px; */
+    }
 
 .bootstrap-switch {
     border-radius: 3px; }

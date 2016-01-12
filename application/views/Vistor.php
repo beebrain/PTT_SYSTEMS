@@ -29,7 +29,6 @@
                                             <option value="2">Business</option>
                                             <option value="3">AREA MANAGER</option>
                                             <option value="4">Dealer</option>
-                                           
                                             <option value="7">Current Product</option>
                                             <option value="8">Recommended Product</option>
 
@@ -71,6 +70,7 @@
                                                 <th>Business</th>
                                                 <th>Area Manager</th>
                                                 <th>Dealer</th>
+                                                <th>Objective</th>
                                                 <th>Next App.</th>
                                                 <th>Contact</th>
                                                 <th>Current Product</th>
@@ -85,7 +85,13 @@
                                                 ?>
                                                 <tr class="odd gradeX">
 
-                                                    <td><?= $value->company_code ?></td>
+                                                    <td><?= $value->company_code ?>
+
+                                                        <p >
+                                                            ( <?= $value->type ?> )
+                                                        </p>
+                                                       
+                                                    </td>
 
                                                     <td style="width: 20%">
                                                         <a href="<?php echo base_url() . 'index.php/CompanyManage/showHistory/' . $value->company_id ?> "><?= $value->name ?></a> 
@@ -95,16 +101,22 @@
                                                         <a href="<?php echo base_url() . 'index.php/CompanyManage/editCompany/' . $value->company_id ?> "><i class="fa fa-edit pull-right"></i></a>
 
                                                     </td>
-                                                    <td style="width: 25%"><?= $value->business ?></td>
+                                                    <td style="width: 25%">
+                                                        <?php
+                                                        echo mb_substr($value->business, 0, 70, 'UTF-8');
+                                                        echo "...";
+                                                        ?>
+                                                    </td>
                                                     <td><?= $value->Aname ?></td>
                                                     <td><?= $value->Dname ?></td>
+                                                    <td><?= $value->objective ?></td>
                                                     <td><?php
-                                                            if ($value->tentative > 0) {
-                                                                echo "Tentative";
-                                                            } else {
-                                                                echo date('d-m-Y', strtotime($value->v_app));
-                                                            }
-                                                            ?>
+                                                        if ($value->tentative > 0) {
+                                                            echo "Tentative";
+                                                        } else {
+                                                            echo date('d-m-Y', strtotime($value->v_app));
+                                                        }
+                                                        ?>
                                                     </td>
                                                     <td><?= $value->c_contact ?></td>
                                                     <td><?= $value->current_product ?></td>
@@ -121,7 +133,13 @@
                                                     ?>
                                                     <tr class="odd gradeX">
 
-                                                        <td><?= $value->company_code ?></td>
+                                                        <td><?= $value->company_code ?>
+
+                                                            <p >
+                                                                ( <?= $value->type ?> )
+                                                            </p>
+                                                          
+                                                        </td>
 
                                                         <td style="width: 20%">
                                                             <a href="<?php echo base_url() . 'index.php/CompanyManage/showHistory/' . $value->company_id ?> "><?= $value->name ?></a> 
@@ -131,9 +149,14 @@
                                                             <a href="<?php echo base_url() . 'index.php/CompanyManage/editCompany/' . $value->company_id ?> "><i class="fa fa-edit pull-right"></i></a>
 
                                                         </td>
-                                                        <td style="width: 25%"><?= $value->business ?></td>
+                                                        <td style="width: 25%"><?php
+                                                            echo mb_substr($value->business, 0, 70, 'UTF-8');
+                                                            echo "...";
+                                                            ?>
+                                                        </td>
                                                         <td><?= $value->Aname ?></td>
                                                         <td><?= $value->Dname ?></td>
+                                                        <td><?= $value->objective ?></td>
                                                         <td><?php
                                                             if ($value->tentative > 0) {
                                                                 echo "Tentative";
@@ -157,7 +180,12 @@
                                                     ?>
                                                     <tr class="odd gradeX">
 
-                                                        <td><?= $value->company_code ?></td>
+                                                        <td><?= $value->company_code ?>
+                                                            <p >
+                                                                ( <?= $value->type ?> )
+                                                            </p>
+
+                                                        </td>
 
                                                         <td style="width: 20%">
                                                             <a href="<?php echo base_url() . 'index.php/CompanyManage/showHistory/' . $value->company_id ?> "><?= $value->name ?></a> 
@@ -167,9 +195,15 @@
                                                             <a href="<?php echo base_url() . 'index.php/CompanyManage/editCompany/' . $value->company_id ?> "><i class="fa fa-edit pull-right"></i></a>
 
                                                         </td>
-                                                        <td style="width: 25%"><?= $value->business ?></td>
+                                                        <td style="width: 25%">
+                                                            <?php
+                                                            echo mb_substr($value->business, 0, 70, 'UTF-8');
+                                                            echo "...";
+                                                            ?>
+                                                        </td>
                                                         <td><?= $value->Aname ?></td>
                                                         <td><?= $value->Dname ?></td>
+                                                        <td>N/A</td>
                                                         <td>N/A
                                                         </td>
                                                         <td><?= $value->c_contact ?></td>
@@ -190,10 +224,6 @@
 
 
             </div>
-
-
-
-
             <?php $this->load->view("newTemp/script"); ?>
             <?php $this->load->view("newTemp/footer"); ?>
             <script src="<?php echo base_url('asserts') ?>/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
@@ -203,73 +233,73 @@
             <script>
 
 
-                                                                var table = $('#company_table').DataTable({
-                                                                    "dom": '<"top"l<"clear">>rt<"bottom"ip<"clear">>',
-                                                                    // "dom": '<"top"l>t<"bottom"ip><"clear">',
-                                                                    "aaSorting": [],
-                                                                    "aoColumnDefs": // Sort Date
-                                                                            [
-                                                                                {"sType": "date-uk",
-                                                                                    "aTargets": [5] // Taget column
-                                                                                },
-                                                                                {"sWidth": "6%", "aTargets": [0]  // Taget column
-                                                                                },
-                                                                                {
-                                                                                    "sWidth": "50px",
-                                                                                    "aTargets": [2],
-                                                                                    "bVisible": true
-                                                                                },
-                                                                                {
-                                                                                    "sWidth": "8%",
-                                                                                    "aTargets": [5],
-                                                                                    "bVisible": true
-                                                                                },
-                                                                                {
-                                                                                    "aTargets": [6, 7, 8],
-                                                                                    "bVisible": false
-                                                                                },
-                                                                            ]
-                                                                });
-                                                                $('.input-daterange').datepicker({
-                                                                    format: "dd-mm-yyyy",
-                                                                    autoclose: true,
-                                                                    todayHighlight: true
-                                                                });
-                                                                $('#dateSearch').on('click', function () {
-                                                                    window.location.href = "<?php echo base_url('index.php/CompanyManage/searchDate/') . "/" ?>" + $('#startDate').val() + "/" + $('#endDate').val();
-                                                                });
-                                                                $('#search_text').on('keyup', function () {
-                                                                    var index = $('#topicfill :selected').val();
-                                                                    console.log(index);
-                                                                    if (this.value == "") {
-                                                                        table.search('').columns().search('').draw();
-                                                                    } else {
-                                                                        console.log(index);
-                                                                        table.columns(index).search(this.value).draw();
-                                                                    }
-                                                                });
-
-
-                                                                function deleteCom(id) {
-                                                                    /* get data onclick */
-
-                                                                    $.confirm({
-                                                                        title: 'Delete!',
-                                                                        content: 'ต้องการลบ Company หรือไม่ ',
-                                                                        confirmButton: "Yes",
-                                                                        cancelButton: "Cancel",
-                                                                        confirmButtonClass: "btn-danger",
-                                                                        cancelButtonClass: "btn-warning",
-                                                                        confirm: function () {
-
-                                                                            //console.log("<?php echo base_url('index.php/CompanyManage/deleteCompany/') . "/" ?>" + id);
-                                                                            window.location.href = "<?php echo base_url('index.php/CompanyManage/deleteCompany/') . "/" ?>" + id
+                                                        var table = $('#company_table').DataTable({
+                                                            "dom": '<"top"l<"clear">>rt<"bottom"ip<"clear">>',
+                                                            // "dom": '<"top"l>t<"bottom"ip><"clear">',
+                                                            "aaSorting": [],
+                                                            "aoColumnDefs": // Sort Date
+                                                                    [
+                                                                        {"sType": "date-uk",
+                                                                            "aTargets": [6] // Taget column
                                                                         },
-                                                                        cancel: function () {
-                                                                        }
-                                                                    });
+                                                                        {"sWidth": "6%", "aTargets": [0]  // Taget column
+                                                                        },
+                                                                        {
+                                                                            "sWidth": "50px",
+                                                                            "aTargets": [2],
+                                                                            "bVisible": true
+                                                                        },
+                                                                        {
+                                                                            "sWidth": "8%",
+                                                                            "aTargets": [6],
+                                                                            "bVisible": true
+                                                                        },
+                                                                        {
+                                                                            "aTargets": [7, 8, 9],
+                                                                            "bVisible": false
+                                                                        },
+                                                                    ]
+                                                        });
+                                                        $('.input-daterange').datepicker({
+                                                            format: "dd-mm-yyyy",
+                                                            autoclose: true,
+                                                            todayHighlight: true
+                                                        });
+                                                        $('#dateSearch').on('click', function () {
+                                                            window.location.href = "<?php echo base_url('index.php/CompanyManage/searchDate/') . "/" ?>" + $('#startDate').val() + "/" + $('#endDate').val();
+                                                        });
+                                                        $('#search_text').on('keyup', function () {
+                                                            var index = $('#topicfill :selected').val();
+                                                            console.log(index);
+                                                            if (this.value == "") {
+                                                                table.search('').columns().search('').draw();
+                                                            } else {
+                                                                console.log(index);
+                                                                table.columns(index).search(this.value).draw();
+                                                            }
+                                                        });
 
+
+                                                        function deleteCom(id) {
+                                                            /* get data onclick */
+
+                                                            $.confirm({
+                                                                title: 'Delete!',
+                                                                content: 'ต้องการลบ Company หรือไม่ ',
+                                                                confirmButton: "Yes",
+                                                                cancelButton: "Cancel",
+                                                                confirmButtonClass: "btn-danger",
+                                                                cancelButtonClass: "btn-warning",
+                                                                confirm: function () {
+
+                                                                    //console.log("<?php echo base_url('index.php/CompanyManage/deleteCompany/') . "/" ?>" + id);
+                                                                    window.location.href = "<?php echo base_url('index.php/CompanyManage/deleteCompany/') . "/" ?>" + id
+                                                                },
+                                                                cancel: function () {
                                                                 }
+                                                            });
+
+                                                        }
 
 
             </script>

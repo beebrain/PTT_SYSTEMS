@@ -8,7 +8,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
     <!-- CSS Libs -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asserts') ?>/bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('asserts') ?>/bower_components/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asserts') ?>/bower_components/animate.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asserts') ?>/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asserts') ?>/bower_components/iCheck/skins/flat/_all.css">

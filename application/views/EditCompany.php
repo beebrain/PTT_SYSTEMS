@@ -1,4 +1,4 @@
-
+<link href="<?php echo base_url('asserts') ?>/css/jquery.tagit.css" rel="stylesheet" type="text/css">
 <div class="app-container">
     <div class="row content-container">
         <?php $this->load->view("newTemp/navhead.php") ?>
@@ -99,7 +99,36 @@
                                                         <div class="col-lg-6 ">
                                                             <div class="form-group">
                                                                 <label>Custormer Contact</label>
-                                                                <input class="form-control" name="c_contact" value="<?= $company->c_contact ?>">
+                                                                <input class="form-control" name="c_contact" id="c_contact" value="<?= $company->c_contact ?>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row no-margin-bottom">
+                                                        <div class="col-lg-6 ">
+                                                            <div class="form-group">
+                                                                <label>MAP</label>
+                                                                <input class="form-control" name="map" id="Map" value="<?= $company->map ?>">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 ">
+                                                            <div class="form-group">
+                                                                <label>Type</label>
+                                                                <div class="checkbox">
+                                                                    <?php
+                                                                    $mystring = $company->type;
+                                                                    $findA = 'A';
+                                                                    $findI = 'I';
+                                                                    $findS = 'S';
+                                                                    $findA = strpos($mystring, $findA);
+                                                                    $findI = strpos($mystring, $findI);
+                                                                    $findS = strpos($mystring, $findS);
+                                                                    ?>
+
+                                                                    <label class="checkbox-inline"><input type="checkbox" value="A"  name="type[]" <?php if ($findA !== false) echo "checked"; ?> >Automotive (A)</label>
+                                                                    <label class="checkbox-inline"><input type="checkbox" value="I"  name="type[]" <?php if ($findI !== false) echo "checked"; ?>>Industrial (I)</label>
+                                                                    <label class="checkbox-inline"><input type="checkbox" value="S"  name="type[]" <?php if ($findS !== false) echo "checked"; ?>>Specialty (S)</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -156,8 +185,9 @@
         </div>
         <?php $this->load->view("newTemp/script"); ?>
         <?php $this->load->view("newTemp/footer"); ?>
-        <script src="<?php echo base_url('asserts') ?>/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 
+        <script src="<?php echo base_url('asserts') ?>/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+        <script src="<?php echo base_url('asserts') ?>/js/tag-it.js" ></script>
         <script>
 
                                                     jQuery.validator.setDefaults({
@@ -183,6 +213,13 @@
                                                                 required: "<p class='text-danger'>กรุณาระบุ ที่ตั้ง บริษัท</p>"
                                                             }
                                                         }
+                                                    });
+
+
+                                                    $(document).ready(function () {
+                                                        $("#c_contact").tagit({
+                                                            allowSpaces: true
+                                                        });
                                                     });
 
                                                     var form = $("#newCom");

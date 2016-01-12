@@ -19,7 +19,7 @@
                                 <h4>Detail of Company  
                                     <span class="pull-right">
                                         <i class="fa fa-navicon" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" ></i>
-                                        <a href="<?php echo base_url('index.php/CompanyManage/Visitor')?>" ><i class="fa fa-close fa-fw" style="color: black"></i></a> 
+                                        <a href="<?php echo base_url('index.php/CompanyManage/Visitor') ?>" ><i class="fa fa-close fa-fw" style="color: black"></i></a> 
                                     </span></h4>
                             </div>
 
@@ -84,7 +84,33 @@
                                                     <label>Customer Contact:</label>
                                                 </td>
                                                 <td >
-                                                    <?= $company->c_contact ?>
+                                                    <?php
+                                                    $text = str_replace(',', "<br>", $company->c_contact);
+                                                    echo $text;
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="field-label  active">
+                                                    <label>Map:</label>
+                                                </td>
+                                                <td >
+                                                    <a href=" <?= $company->map ?>" target="_blank" >Map Link</a>
+
+                                                </td>
+                                                <td class="field-label active">
+                                                    <label>Type:</label>
+                                                </td>
+                                                <td >
+                                                 
+                                                     <?php
+                                                    $text = str_replace(',', "<br>", $company->type);
+                                                    $text = str_replace('A', "Automotive (A)", $text);
+                                                    $text = str_replace('I', "Industrial (I)", $text);
+                                                     $text = str_replace('S', "Specialty (S)", $text);
+
+                                                    echo $text;
+                                                    ?>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -121,7 +147,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                       
+
                                     </div>
 
                                     <div class="col-lg-6 no-margin-bottom" style="padding-left: 0px;margin-bottom: 0px">
@@ -177,6 +203,7 @@
                                             <th>Detail</th>
                                             <th>Problem Solutions</th>
                                             <th>Offer Service</th>
+                                            <th>Objective</th>
                                             <th >control</th>
                                             <th >rec_pro</th>
                                         </tr>
@@ -201,8 +228,9 @@
                                                 </td>
 
                                                 <td> <?= $value->detail ?></td>
+                                                <td > <?= $value->pro_sol ?></td>
                                                 <td > <?= $value->service ?></td>
-                                                <td > <?= $value->service ?></td>
+                                                <td > <?= $value->objective ?></td>
                                                 <td >
                                                     <div class="btn-group">
                                                         <button type="button" class="btn-xs btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">more <span class="caret"></span></button>
@@ -280,161 +308,169 @@
 
         <script>
 
-                                                                $(document).ready(function () {
-                                                                    $('#slide_stick').slick({
-                                                                        dots: true,
-                                                                        infinite: true,
-                                                                        speed: 500,
-                                                                        fade: true,
-                                                                        cssEase: 'linear'
-                                                                    });
-
-                                                                    $('[data-toggle="popover"]').popover({
-                                                                        html: true,
-                                                                        content: function () {
-                                                                            return $('#popoverExampleTwoHiddenContent').html();
-                                                                        },
-                                                                        title: function () {
-                                                                            return $('#popoverExampleTwoHiddenTitle').html();
-                                                                        }
-                                                                    });
+                                                            $(document).ready(function () {
+                                                                $('#slide_stick').slick({
+                                                                    dots: true,
+                                                                    infinite: true,
+                                                                    speed: 500,
+                                                                    fade: true,
+                                                                    cssEase: 'linear'
                                                                 });
 
-                                                                $("#team").autocomplete({
-                                                                    source: function (request, response) {
-                                                                        $.ajax({
-                                                                            url: "<?php echo base_url('index.php/CompanyManage/getDealer') ?>",
-                                                                            dataType: "json",
-                                                                            data: {term: request.term},
-                                                                            success: function (data) {
-                                                                                console.log(data);
-                                                                                var array = $.map(data, function (item) {
-                                                                                    return {
-                                                                                        label: item.label,
-                                                                                        id: item.value
-                                                                                    };
-                                                                                });
-                                                                                response($.ui.autocomplete.filter(array, request.term));
-                                                                            },
-                                                                            minLength: 0,
-                                                                        });
+                                                                $('[data-toggle="popover"]').popover({
+                                                                    html: true,
+                                                                    content: function () {
+                                                                        return $('#popoverExampleTwoHiddenContent').html();
                                                                     },
-                                                                    select: function (event, ui) {
-                                                                        $('#dealer').val(ui.item.id);
+                                                                    title: function () {
+                                                                        return $('#popoverExampleTwoHiddenTitle').html();
                                                                     }
                                                                 });
+                                                            });
 
-                                                                var table = $('#company_table').DataTable({
-                                                                    "dom": '<"top"l<"clear">>rt<"bottom"ip<"clear">>',
-                                                                    // "dom": '<"top"l>t<"bottom"ip><"clear">',
-                                                                    //dom: 'Bfrtip',
-
-                                                                    "aaSorting": [],
-                                                                    "aoColumnDefs": // Sort Date
-                                                                            [
-                                                                                {
-                                                                                    "sType": "date-uk",
-                                                                                    "aTargets": [1],
-                                                                                    "sWidth": "8%"
-                                                                                },
-                                                                                {
-                                                                                    "aTargets": [3, 4, 5],
-                                                                                    "width": "23%"
-                                                                                },
-                                                                                {
-                                                                                    bSortable: false,
-                                                                                    "aTargets": [0],
-                                                                                    "width": "1%"
-                                                                                },
-                                                                                {
-                                                                                    bSortable: false,
-                                                                                    "aTargets": [6],
-                                                                                    "width": "5%"
-                                                                                },
-                                                                                {
-                                                                                    "bVisible": false,
-                                                                                    bSortable: false,
-                                                                                    "aTargets": [7],
-                                                                                },
-                                                                            ]
-                                                                });
-                                                                $('#vis_date').datepicker({
-                                                                    format: "dd/mm/yyyy",
-                                                                    endDate: "-",
-                                                                    autoclose: true,
-                                                                    todayHighlight: true
-                                                                });
-                                                                $('#app_date').datepicker({
-                                                                    format: "dd/mm/yyyy",
-                                                                    startDate: "-",
-                                                                    autoclose: true,
-                                                                    todayHighlight: true
-                                                                });
-
-                                                                function showExcel() {
-                                                                    var searchIDs = $(':checkbox:checked').map(function () {
-                                                                        return $(this).val();
-                                                                    }).get();
-                                                                    console.log(searchIDs);
-
+                                                            $("#team").autocomplete({
+                                                                source: function (request, response) {
+                                                                    $.ajax({
+                                                                        url: "<?php echo base_url('index.php/CompanyManage/getDealer') ?>",
+                                                                        dataType: "json",
+                                                                        data: {term: request.term},
+                                                                        success: function (data) {
+                                                                            console.log(data);
+                                                                            var array = $.map(data, function (item) {
+                                                                                return {
+                                                                                    label: item.label,
+                                                                                    id: item.value
+                                                                                };
+                                                                            });
+                                                                            response($.ui.autocomplete.filter(array, request.term));
+                                                                        },
+                                                                        minLength: 0,
+                                                                    });
+                                                                },
+                                                                select: function (event, ui) {
+                                                                    $('#dealer').val(ui.item.id);
                                                                 }
+                                                            });
 
-                                                                function showInfo(id) {
-                                                                    window.location.href = "<?php echo base_url('index.php/CompanyManage/showVisitDetail/') . "/" ?>" + id;
-                                                                }
+                                                            var table = $('#company_table').DataTable({
+                                                                "dom": '<"top"l<"clear">>rt<"bottom"ip<"clear">>',
+                                                                // "dom": '<"top"l>t<"bottom"ip><"clear">',
+                                                                //dom: 'Bfrtip',
 
+                                                                "aaSorting": [],
+                                                                "aoColumnDefs": // Sort Date
+                                                                        [
+                                                                            {
+                                                                                "sType": "date-uk",
+                                                                                "aTargets": [1],
+                                                                                "sWidth": "8%"
+                                                                            },
+                                                                            {
+                                                                                "aTargets": [3, 4, 5],
+                                                                                "width": "23%"
+                                                                            },
+                                                                            {
+                                                                                bSortable: false,
+                                                                                "aTargets": [0],
+                                                                                "width": "1%"
+                                                                            },
+                                                                            {
+                                                                                bSortable: false,
+                                                                                "aTargets": [7],
+                                                                                "width": "5%"
+                                                                            },
+                                                                            {
+                                                                                "bVisible": false,
+                                                                                bSortable: false,
+                                                                                "aTargets": [8],
+                                                                            },
+                                                                        ]
+                                                            });
+                                                            $('#vis_date').datepicker({
+                                                                format: "dd/mm/yyyy",
+                                                                endDate: "-",
+                                                                autoclose: true,
+                                                                todayHighlight: true
+                                                            });
+                                                            $('#app_date').datepicker({
+                                                                format: "dd/mm/yyyy",
+                                                                startDate: "-",
+                                                                autoclose: true,
+                                                                todayHighlight: true
+                                                            });
 
-                                                                function showpic(id) {
-                                                                    var URL = "<?php echo base_url() . 'index.php/CompanyManage/getimage' ?>";
-                                                                    var formData = {"vis_id": id}
-                                                                    $.post(URL, formData, function (data) {
-                                                                        var data_json = jQuery.parseJSON(data);
-                                                                        $('#slide_stick').slick('unslick');
-
-                                                                        $('#slide_stick').html('');
-                                                                        for (index = 0, len = data_json.length; index < len; ++index) {
-                                                                            data = data_json[index].link_img;
-                                                                            //$('#slide_stick').slick('slickAdd', '<img src=' + data + '>');
-
-                                                                            $('#slide_stick').append("<div><img src='<?php echo base_url() ?>/upload/" + data + "' class='center-block'> </div>");
-                                                                            // console.log("<div class='item'><img src='" + data + "'> </div>");
-
-                                                                        }
-                                                                        $('#slide_stick').slick({
-                                                                            autoplay: true,
-                                                                            autoplaySpeed: 5000,
-                                                                            arrows: false,
-                                                                            dots: true,
-                                                                            infinite: true,
-                                                                            speed: 800,
-                                                                            fade: true
-
-                                                                        });
-                                                                        $('#slideShow').modal('show');
-                                                                        }).fail(function (jqXHR, textStatus, errorThrown) {
-
-                                                                     });
-
-
-                                                                }
-
-                                                                function showrec_pro(id) {
-                                                                    var URL = "<?php echo base_url() . 'index.php/VisitController/getRecPro' ?>";
-                                                                    var formData = {"vis_id": id}
-                                                                    $.post(URL, formData, function (data) {
-                                                                        var data_json = jQuery.parseJSON(data);
-                                                                        //console.log(data);
-                                                                        console.log(data_json[0].rec_pro);
-                                                                        $('#content_rec').html(data_json[0].rec_pro);
-                                                                        $('#Reccommend').modal('show');
-                                                                        }).fail(function (jqXHR, textStatus, errorThrown) {
-
-                                                                     });
-
-                                                                }
-                                                                $('.modal').on('shown.bs.modal', function (e) {
-                                                                    $('#slide_stick').resize();
+                                                            function showExcel() {
+                                                                var searchIDs = $(':checkbox:checked').map(function () {
+                                                                    return $(this).val();
+                                                                }).get();
+                                                                console.log(searchIDs);
+                                                                var stringValue = "";
+                                                                searchIDs.forEach(function (entry) {
+                                                                    stringValue += "-" + entry;
                                                                 });
+                                                                stringValue = stringValue.substring(1, stringValue.length);
+
+                                                                // console.log("<?php echo base_url('index.php/ReportController/testSendArray/') . "/" ?>" + stringValue);
+
+                                                                window.location.href = "<?php echo base_url('index.php/ReportController/reportToExcel/') . "/" ?>" + stringValue;
+                                                            }
+
+                                                            function showInfo(id) {
+                                                                window.location.href = "<?php echo base_url('index.php/CompanyManage/showVisitDetail/') . "/" ?>" + id;
+                                                            }
+
+
+                                                            function showpic(id) {
+                                                                var URL = "<?php echo base_url() . 'index.php/CompanyManage/getimage' ?>";
+                                                                var formData = {"vis_id": id}
+                                                                $.post(URL, formData, function (data) {
+                                                                    var data_json = jQuery.parseJSON(data);
+                                                                    $('#slide_stick').slick('unslick');
+
+                                                                    $('#slide_stick').html('');
+                                                                    for (index = 0, len = data_json.length; index < len; ++index) {
+                                                                        data = data_json[index].link_img;
+                                                                        //$('#slide_stick').slick('slickAdd', '<img src=' + data + '>');
+
+                                                                        $('#slide_stick').append("<div><img src='<?php echo base_url() ?>/upload/" + data + "' class='center-block'> </div>");
+                                                                        // console.log("<div class='item'><img src='" + data + "'> </div>");
+
+                                                                    }
+                                                                    $('#slide_stick').slick({
+                                                                        autoplay: true,
+                                                                        autoplaySpeed: 5000,
+                                                                        arrows: false,
+                                                                        dots: true,
+                                                                        infinite: true,
+                                                                        speed: 800,
+                                                                        fade: true
+
+                                                                    });
+                                                                    $('#slideShow').modal('show');
+                                                                    }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                                                                 });
+
+
+                                                            }
+
+                                                            function showrec_pro(id) {
+                                                                var URL = "<?php echo base_url() . 'index.php/VisitController/getRecPro' ?>";
+                                                                var formData = {"vis_id": id}
+                                                                $.post(URL, formData, function (data) {
+                                                                    var data_json = jQuery.parseJSON(data);
+                                                                    //console.log(data);
+                                                                    console.log(data_json[0].rec_pro);
+                                                                    $('#content_rec').html(data_json[0].rec_pro);
+                                                                    $('#Reccommend').modal('show');
+                                                                    }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                                                                 });
+
+                                                            }
+                                                            $('.modal').on('shown.bs.modal', function (e) {
+                                                                $('#slide_stick').resize();
+                                                            });
 
 
 
