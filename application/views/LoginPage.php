@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url('asserts'); ?>/bower_components/fontawesome/css/font-awesome.min.css">
         
         <!-- CSS App -->
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url('asserts'); ?>/css/style.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url('asserts'); ?>/css/style_1.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url('asserts'); ?>/css/themes.css">
     </head>
 
@@ -26,11 +26,6 @@
                         </div>
                         <div class="col-sm-12">
                             <div class="login-body">
-                                <div class="progress hidden" id="login-progress">
-                                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                        Log In...
-                                    </div>
-                                </div>
                                 <form action="<?php echo base_url("index.php/Welcome/loginProcess") ?>" method="post">
                                     <div class="control">
                                         <input type="text"  name="username" class="form-control" value="" placeholder="Username"/>
@@ -49,7 +44,8 @@
             </div>
         </div>
 
-      
+      <script src="<?php echo base_url('asserts') ?>/bower_components/jquery/dist/jquery.js"></script>
+      <script src="<?php echo base_url('asserts') ?>/js/jquery.html5-placeholder-shim.js"></script>
     </body>
 
 </html>

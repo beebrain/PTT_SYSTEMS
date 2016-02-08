@@ -420,7 +420,7 @@ class CompanyManage extends CI_Controller {
             $data['tentative'] = '1';
         }
 
-        print_r($data);
+        //print_r($data);
         if (isset($data['currentImage'])) {
             $imageList = $data['currentImage'];
             unset($data['currentImage']);
@@ -460,6 +460,8 @@ class CompanyManage extends CI_Controller {
         redirect('index.php/CompanyManage/showVisitDetail/' . $vis_id);
     }
 
+    
+    
     public function searchDate($startDate, $endDate) {
         echo $startDate;
         echo $endDate;

@@ -116,11 +116,11 @@
 
                                                         <div class="row">
                                                             <div class="col-lg-12 text-center no-margin-bottom" style="margin-bottom:0px">
-                                                                <h4><label class="text-center">Picture</label></h4>
+                                                                <h4><label class="text-center">Pictures</label></h4>
                                                             </div>
                                                         </div>
                                                         <div class="row ">
-                                                            <div class="col-lg-12 text-center" id="slide_stick" style="height:400px;" >
+                                                            <div class="col-lg-12 text-center" id="slide_stick"  >
                                                                 <?php
                                                                 foreach ($image as $key => $value) {
 
