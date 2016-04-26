@@ -184,6 +184,8 @@ class ReportController extends CI_Controller {
                 $this->excel->getActiveSheet()->getStyle('A' . ($key + $indexrow + 3))->applyFromArray($styleBlackGround);
                 $this->excel->getActiveSheet()->setCellValue('A' . ($key + $indexrow + 4), "Recommended Product");
                 $this->excel->getActiveSheet()->getStyle('A' . ($key + $indexrow + 4))->applyFromArray($styleBlackGround);
+                 $this->excel->getActiveSheet()->setCellValue('A' . ($key + $indexrow + 5), "Problem Solution");
+                $this->excel->getActiveSheet()->getStyle('A' . ($key + $indexrow + 5))->applyFromArray($styleBlackGround);
 
 
                 // Data Mearge
@@ -195,7 +197,8 @@ class ReportController extends CI_Controller {
                 $this->excel->getActiveSheet()->mergeCells('B' . ($key + $indexrow + 2) . ':' . 'N' . ($key + $indexrow + 2));
                 $this->excel->getActiveSheet()->mergeCells('B' . ($key + $indexrow + 3) . ':' . 'N' . ($key + $indexrow + 3));
                 $this->excel->getActiveSheet()->mergeCells('B' . ($key + $indexrow + 4) . ':' . 'N' . ($key + $indexrow + 4));
-                $this->excel->getActiveSheet()->mergeCells('A' . ($key + $indexrow + 5) . ':' . 'N' . ($key + $indexrow + 5));
+                $this->excel->getActiveSheet()->mergeCells('B' . ($key + $indexrow + 5) . ':' . 'N' . ($key + $indexrow + 5));
+                $this->excel->getActiveSheet()->mergeCells('A' . ($key + $indexrow + 6) . ':' . 'N' . ($key + $indexrow + 6));
 
                 $this->excel->getActiveSheet()->setCellValue('B' . ($key + $indexrow), $this->expandWord($value_r->vis_date));
                 $this->excel->getActiveSheet()->setCellValue('I' . ($key + $indexrow), $this->expandWord($value_r->objective));
@@ -208,6 +211,7 @@ class ReportController extends CI_Controller {
                 $this->excel->getActiveSheet()->setCellValue('B' . ($key + $indexrow + 2), $this->expandWord($value_r->detail));
                 $this->excel->getActiveSheet()->setCellValue('B' . ($key + $indexrow + 3), $this->expandWord($value_r->service));
                 $this->excel->getActiveSheet()->setCellValue('B' . ($key + $indexrow + 4), $this->expandWord($value_r->rec_pro));
+                $this->excel->getActiveSheet()->setCellValue('B' . ($key + $indexrow + 5), $this->expandWord($value_r->pro_sol));
 
 
                 $height_line = substr_count($value_r->team, ",");
@@ -223,11 +227,13 @@ class ReportController extends CI_Controller {
                 $this->excel->getActiveSheet()->getRowDimension(($key + $indexrow + 3))->setRowHeight(($height_line + 1) * 21);
 
                 $height_line = substr_count($value_r->rec_pro, "<br />");
-                $this->excel->getActiveSheet()->getRowDimension(($key + $indexrow + 4))->setRowHeight(($height_line + 1) * 21);
+                $this->excel->getActiveSheet()->getRowDimension(($key + $indexrow + 4))->setRowHeight(($height_line + 1) * 42);
 
+                $height_line = substr_count($value_r->pro_sol, "<br />");
+                $this->excel->getActiveSheet()->getRowDimension(($key + $indexrow + 5))->setRowHeight(($height_line + 1) * 42);
 
-                $this->excel->getActiveSheet()->getStyle('A' . ($key + $indexrow) . ':' . 'N' . ($key + $indexrow + 4))->applyFromArray($styleArray);
-                $indexrow += 5;
+                $this->excel->getActiveSheet()->getStyle('A' . ($key + $indexrow) . ':' . 'N' . ($key + $indexrow + 6))->applyFromArray($styleArray);
+                $indexrow += 6;
 //                // print_r($value_r);
             }
         }
