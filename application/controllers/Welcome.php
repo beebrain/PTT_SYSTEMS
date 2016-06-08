@@ -87,9 +87,9 @@ class Welcome extends CI_Controller {
         
         if($username == "PTT" && $password == "PTTSystems"){
             $this->session->set_userdata('user_data', $username);
-       
-        }
         redirect("index.php/CompanyManage/Visitor");
+        }
+         redirect("index.php/Welcome/index");
     }
 
     public function showHistory() {
